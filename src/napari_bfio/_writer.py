@@ -9,6 +9,8 @@ Replace code below according to your needs.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, List, Sequence, Tuple, Union
+from bfio import BioReader, BioWriter
+import numpy as np
 
 if TYPE_CHECKING:
     DataType = Union[Any, Sequence[Any]]
@@ -17,10 +19,21 @@ if TYPE_CHECKING:
 
 def write_single_image(path: str, data: Any, meta: dict) -> List[str]:
     """Writes a single image layer"""
+    if meta["rgb"]:
+        BioWriter.logger.info("The BioWriter cannot write color images.")
+        return None
 
-    # implement your writer logic here ...
+    bw = BioWriter(path)
+    bw.shape = data.shape
+    bw.dtype = data.dtype
 
-    # return path to any file(s) that were successfully written
+    data = np.transpose(data, tuple(reversed(range(data.ndim))))
+
+    while data.ndim < 5:
+        data = data[..., np.newaxis]
+
+    bw[:] = data
+
     return [path]
 
 

@@ -6,6 +6,7 @@ implement multiple readers or even other plugin contributions. see:
 https://napari.org/stable/plugins/guides.html?#readers
 """
 import numpy as np
+from bfio import BioReader
 
 
 def napari_get_reader(path):
@@ -28,9 +29,9 @@ def napari_get_reader(path):
         # so we are only going to look at the first file.
         path = path[0]
 
-    # if we know we cannot read the file, we immediately return None.
-    if not path.endswith(".npy"):
-        return None
+    # # if we know we cannot read the file, we immediately return None.
+    # if not path.endswith(".npy"):
+    #     return None
 
     # otherwise we return the *function* that can read ``path``.
     return reader_function
@@ -61,7 +62,7 @@ def reader_function(path):
     # handle both a string and a list of strings
     paths = [path] if isinstance(path, str) else path
     # load all files into array
-    arrays = [np.load(_path) for _path in paths]
+    arrays = [BioReader(_path).read() for _path in paths]
     # stack arrays into single array
     data = np.squeeze(np.stack(arrays))
 
