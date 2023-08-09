@@ -1,0 +1,24 @@
+name: napari-bfio
+display_name: Bfio
+contributions:
+  commands:
+    - id: napari-bfio.get_reader
+      python_name: napari_bfio._reader:napari_get_reader
+      title: Open data with Bfio
+    - id: napari-bfio.write_multiple
+      python_name: napari_bfio._writer:write_multiple
+      title: Save multi-layer data with Bfio
+    - id: napari-bfio.write_single_image
+      python_name: napari_bfio._writer:write_single_image
+      title: Save image data with Bfio
+  readers:
+    - command: napari-bfio.get_reader
+      accepts_directories: false
+      filename_patterns: ['*.npy']
+  writers:
+    - command: napari-bfio.write_multiple
+      layer_types: ['image*','labels*']
+      filename_extensions: []
+    - command: napari-bfio.write_single_image
+      layer_types: ['image']
+      filename_extensions: ['.npy']
