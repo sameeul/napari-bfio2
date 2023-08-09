@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 
 def write_single_image(path: str, data: Any, meta: dict) -> List[str]:
     """Writes a single image layer"""
+    print(meta)
     if meta["rgb"]:
         BioWriter.logger.info("The BioWriter cannot write color images.")
         return None
