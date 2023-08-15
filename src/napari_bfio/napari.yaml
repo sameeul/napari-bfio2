@@ -13,7 +13,7 @@ contributions:
       title: Save image data with Bfio
   readers:
     - command: napari-bfio.get_reader
-      accepts_directories: false
+      accepts_directories: true
       filename_patterns: ['*.ome.tiff', '*.ome.tif', '*.ome.zarr']
   writers:
     - command: napari-bfio.write_multiple
