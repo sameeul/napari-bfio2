@@ -6,7 +6,6 @@ implement multiple readers or even other plugin contributions. see:
 https://napari.org/stable/plugins/guides.html?#readers
 """
 import numpy as np
-from bfio import BioReader
 
 def is_type_supported(path):
     if path.endswith(".ome.tiff"):
@@ -72,6 +71,7 @@ def reader_function(path):
     paths = [path] if isinstance(path, str) else path
     # load all files into array
     layer_data = []
+    from bfio import BioReader # import as late as possible
     for _path in paths:
         br = BioReader(_path)
         layer_data.append((np.squeeze(br.read()), {"metadata":br.metadata}))

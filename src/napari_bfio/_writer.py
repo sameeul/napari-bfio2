@@ -9,7 +9,7 @@ Replace code below according to your needs.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, List, Sequence, Tuple, Union
-from bfio import BioReader, BioWriter
+
 import numpy as np
 import ome_types
 
@@ -19,9 +19,11 @@ if TYPE_CHECKING:
 
 
 def write_single_image(path: str, data: Any, meta: dict) -> List[str]:
+    
     """Writes a single image layer"""
     # need to check if we need to run in a seperate thread to stop GUI from freezing
-
+    
+    from bfio import BioWriter
     # if this image is loaded via bfio BioReader, we will have a non-empty metadata
     if (meta["metadata"] != {}): 
         try:
@@ -55,6 +57,7 @@ def write_multiple(path: str, data: List[FullLayerData]) -> List[str]:
     """Writes multiple layers of different types."""
 
     # implement your writer logic here ...
+    from bfio import BioWriter
     BioWriter.logger.info("Bfio: Multi-file writing not yet supported.")
     return None
     # return path to any file(s) that were successfully written
